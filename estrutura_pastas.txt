@@ -1,0 +1,105 @@
+Área de Trabalho/
+├── .git/
+├── backend/
+│   ├── logs/
+│   ├── node_modules/
+│   ├── scripts/
+│   │   ├── check-files.js
+│   │   ├── check-setup.js
+│   │   └── setup-db.js
+│   ├── src/
+│   │   ├── config/
+│   │   │   ├── auth.js
+│   │   │   └── database.js
+│   │   ├── controllers/
+│   │   │   ├── AuthController.js
+│   │   │   ├── CategoryController.js
+│   │   │   ├── ReportController.js
+│   │   │   ├── TransactionController.js
+│   │   │   └── UserController.js
+│   │   ├── middlewares/
+│   │   │   ├── auth.js
+│   │   │   ├── authorize.js
+│   │   │   ├── errorHandler.js
+│   │   │   └── validate.js
+│   │   ├── models/
+│   │   │   ├── Category.js
+│   │   │   ├── Company.js
+│   │   │   ├── index.js
+│   │   │   ├── Transaction.js
+│   │   │   ├── User.js
+│   │   │   └── UserPreference.js
+│   │   ├── routes/
+│   │   │   ├── auth.routes.js
+│   │   │   ├── category.routes.js
+│   │   │   ├── index.js
+│   │   │   ├── report.routes.js
+│   │   │   ├── settings.routes.js
+│   │   │   ├── transaction.routes.js
+│   │   │   └── user.routes.js
+│   │   ├── test back/
+│   │   │   ├── test-categories.http
+│   │   │   └── test-transaction.http
+│   │   ├── utils/
+│   │   │   └── logger.js
+│   │   ├── validations/
+│   │   │   ├── auth.validation.js
+│   │   │   ├── category.validation.js
+│   │   │   ├── transaction.validation.js
+│   │   │   └── user.validation.js
+│   │   └── app.js
+│   ├── tests/
+│   ├── .env
+│   ├── .gitignore
+│   ├── .sequelizerc
+│   ├── package-lock.json
+│   ├── Package.json
+│   ├── README.md
+│   └── server.js
+├── frontend/
+│   ├── components/
+│   │   └── CategoryList.js
+│   ├── node_modules/
+│   ├── public/
+│   ├── src/
+│   │   ├── components/
+│   │   │   └── Login.js
+│   │   ├── contexts/
+│   │   │   └── AuthContext.js
+│   │   ├── hooks/
+│   │   │   ├── useAuth.js
+│   │   │   ├── useCategories.js
+│   │   │   ├── useFormValidation.js
+│   │   │   ├── useNotifications.js
+│   │   │   └── useTransactions.js
+│   │   ├── services/
+│   │   │   ├── api.js
+│   │   │   ├── authService.js
+│   │   │   ├── categoryService.js
+│   │   │   ├── reportService.js
+│   │   │   ├── transactionService.js
+│   │   │   └── userService.js
+│   │   ├── utils/
+│   │   │   └── currencyMask.js
+│   │   ├── App.css
+│   │   ├── App.js
+│   │   ├── App.test.js
+│   │   ├── index.css
+│   │   ├── index.js
+│   │   ├── logo.svg
+│   │   ├── reportWebVitals.js
+│   │   ├── setupTests.js
+│   │   └── testApi.js
+│   ├── .env
+│   ├── .gitignore
+│   ├── package-lock.json
+│   └── package.json
+├── node_modules/
+├── .gitignore
+├── estrutura_pastas.txt
+├── package-lock.json
+├── package.json
+├── package2.json
+├── README-NEW.md
+├── README.md
+└── reorganize-project.js

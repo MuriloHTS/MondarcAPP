@@ -1,0 +1,167 @@
+### Teste de Transações - Sistema de Controle Financeiro
+### Use com REST Client do VSCode ou converta para Postman/Insomnia
+
+@baseUrl = http://localhost:3001/api
+@contentType = application/json
+
+### 1. Login como Admin (Empresa)
+POST {{baseUrl}}/auth/login
+Content-Type: {{contentType}}
+
+{
+  "email": "admin@empresa.com",
+  "password": "123456"
+}
+
+### Salve o token aqui:
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc1ZDk5MWZlLTcwYzEtNDNmNC05ZWVkLTUyZDdmZjNmNTQ5NiIsImlhdCI6MTc0OTUxMzE5OCwiZXhwIjoxNzUwMTE3OTk4fQ.bzOh8Ns5uJhKaf_u0yxD0-7BbI0s2b56Pl_CELR_37U
+
+### 2. Listar categorias para pegar IDs
+GET {{baseUrl}}/categories
+Authorization: Bearer {{token}}
+
+### 3. Listar todas as transações
+GET {{baseUrl}}/transactions
+Authorization: Bearer {{token}}
+
+### 4. Listar transações com filtros
+GET {{baseUrl}}/transactions?type=expense&limit=10&order_by=amount&order_direction=DESC
+Authorization: Bearer {{token}}
+
+### 5. Listar transações por período
+GET {{baseUrl}}/transactions?start_date=2024-01-01&end_date=2024-12-31
+Authorization: Bearer {{token}}
+
+### 6. Criar transação de receita (substitua CATEGORY_ID)
+POST {{baseUrl}}/transactions
+Authorization: Bearer {{token}}
+Content-Type: {{contentType}}
+
+{
+  "category_id": "27e8d55a-128a-4ec8-9a70-37eb79695473",
+  "amount": 15000.00,
+  "description": "Venda de consultoria - Cliente XYZ",
+  "date": "2024-01-15",
+  "type": "expense",
+  "notes": "Projeto de 3 meses",
+  "tags": ["consultoria", "cliente-xyz"],
+  "status": "completed"
+}
+
+### 7. Criar transação de despesa (substitua CATEGORY_ID)
+POST {{baseUrl}}/transactions
+Authorization: Bearer {{token}}
+Content-Type: {{contentType}}
+
+{
+  "category_id": "27e8d55a-128a-4ec8-9a70-37eb79695473",
+  "amount": 2500.00,
+  "description": "Campanha Google Ads",
+  "date": "2024-01-10",
+  "type": "expense",
+  "notes": "Campanha de janeiro",
+  "tags": ["marketing", "google-ads"],
+  "status": "completed"
+}
+
+### 8. Criar transação recorrente
+POST {{baseUrl}}/transactions
+Authorization: Bearer {{token}}
+Content-Type: {{contentType}}
+
+{
+  "category_id": "27e8d55a-128a-4ec8-9a70-37eb79695473",
+  "amount": 5000.00,
+  "description": "Aluguel mensal do escritório",
+  "date": "2024-01-05",
+  "type": "expense",
+  "recurring": true,
+  "recurring_config": {
+    "frequency": "monthly",
+    "interval": 1,
+    "end_date": "2025-12-31"
+  },
+  "status": "completed"
+}
+
+### 9. Buscar transação específica (substitua ID)
+GET {{baseUrl}}/transactions/b8207383-bf36-467b-8ff7-509e527e3fe8
+Authorization: Bearer {{token}}
+
+### 10. Atualizar transação (substitua ID)
+PUT {{baseUrl}}/transactions/b8207383-bf36-467b-8ff7-509e527e3fe8
+Authorization: Bearer {{token}}
+Content-Type: {{contentType}}
+
+{
+  "amount": 10000.00,
+  "notes": "Valor atualizado após negociação"
+}
+
+### 11. Resumo por categoria
+GET {{baseUrl}}/transactions/summary?group_by=category
+Authorization: Bearer {{token}}
+
+### 12. Resumo por mês
+GET {{baseUrl}}/transactions/summary?group_by=month&start_date=2024-01-01&end_date=2024-12-31
+Authorization: Bearer {{token}}
+
+### 13. Deletar transação (substitua ID)
+DELETE {{baseUrl}}/transactions/e33b3ab2-5369-4aeb-9eca-249702ff69e4
+Authorization: Bearer {{token}}
+
+### 14. Login como Editor (teste de permissões)
+POST {{baseUrl}}/auth/login
+Content-Type: {{contentType}}
+
+{
+  "email": "joao@empresa.com",
+  "password": "123456"
+}
+
+### Salve o token do editor:
+@tokenEditor = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjllYjg5ZjFjLWExOWYtNGM5MS04MWY1LWEyMmVkZGRlZWNlNyIsImlhdCI6MTc0OTUxNDQzMSwiZXhwIjoxNzUwMTE5MjMxfQ.sITBBz0NTaxkWVVf62dK-GqgchJpjzcTFH-ZDBMzYn4
+
+### 15. Editor criando transação (deve funcionar)
+POST {{baseUrl}}/transactions
+Authorization: Bearer {{tokenEditor}}
+Content-Type: {{contentType}}
+
+{
+  "category_id": "27e8d55a-128a-4ec8-9a70-37eb79695473",
+  "amount": 1000.00,
+  "description": "Teste de permissão - Editor",
+  "date": "2024-01-20",
+  "type": "expense",
+  "status": "completed"
+}
+
+### 16. Login como Visualizador (teste de permissões)
+POST {{baseUrl}}/auth/login
+Content-Type: {{contentType}}
+
+{
+  "email": "maria@empresa.com",
+  "password": "123456"
+}
+
+### Salve o token do visualizador:
+@tokenViewer = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImUyYjVhODI5LTE4Y2ItNGNjOC1hMmNkLWM3MmExZjJjZTRmOCIsImlhdCI6MTc0OTUxNDQ4OSwiZXhwIjoxNzUwMTE5Mjg5fQ.oXNf2irif781sxjxdfn-Ug8ASbmNTQYlbnYNeZXqfZY
+
+### 17. Visualizador tentando criar transação (deve falhar)
+POST {{baseUrl}}/transactions
+Authorization: Bearer {{tokenViewer}}
+Content-Type: {{contentType}}
+
+{
+  "category_id": "27e8d55a-128a-4ec8-9a70-37eb79695473",
+  "amount": 500.00,
+  "description": "Teste de permissão - Viewer",
+  "date": "2024-01-20",
+  "type": "expense",
+  "status": "completed"
+}
+
+### 18. Visualizador listando transações (deve funcionar)
+GET {{baseUrl}}/transactions
+Authorization: Bearer {{tokenViewer}}

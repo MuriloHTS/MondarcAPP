@@ -1,0 +1,108 @@
+### Teste de Categorias - Sistema de Controle Financeiro
+### Você pode usar este arquivo com a extensão REST Client do VSCode
+### ou converter para Postman/Insomnia
+
+@baseUrl = http://localhost:3001/api
+@contentType = application/json
+
+### 1. Login como Admin (Empresa)
+POST {{baseUrl}}/auth/login
+Content-Type: {{contentType}}
+
+{
+  "email": "admin@empresa.com",
+  "password": "123456"
+}
+
+### Salve o token retornado aqui:
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc1ZDk5MWZlLTcwYzEtNDNmNC05ZWVkLTUyZDdmZjNmNTQ5NiIsImlhdCI6MTc0OTM5NjY0MywiZXhwIjoxNzUwMDAxNDQzfQ.oW1s89ahZiuFm5ItbZenf6ewnH9MMu78LVo7FYolKuc
+
+### 2. Listar todas as categorias
+GET {{baseUrl}}/categories
+Authorization: Bearer {{token}}
+
+### 3. Listar apenas categorias de receita
+GET {{baseUrl}}/categories?type=income
+Authorization: Bearer {{token}}
+
+### 4. Listar apenas categorias pontuais
+GET {{baseUrl}}/categories?is_punctual=true
+Authorization: Bearer {{token}}
+
+### 5. Buscar categoria específica (substitua o ID)
+GET {{baseUrl}}/categories/3fe96974-4467-4de7-b3ec-1053ca55b74f
+Authorization: Bearer {{token}}
+
+### 6. Criar nova categoria (planejada)
+POST {{baseUrl}}/categories
+Authorization: Bearer {{token}}
+Content-Type: {{contentType}}
+
+{
+  "name": "Consultoria",
+  "type": "income",
+  "budget": 15000,
+  "month": 2,
+  "is_punctual": false,
+  "description": "Receitas de consultoria",
+  "color": "#00FF00"
+}
+
+### 7. Criar categoria pontual
+POST {{baseUrl}}/categories
+Authorization: Bearer {{token}}
+Content-Type: {{contentType}}
+
+{
+  "name": "Bônus",
+  "type": "income",
+  "budget": 5000,
+  "is_punctual": true,
+  "description": "Bônus e premiações eventuais",
+  "color": "#FFD700"
+}
+
+### 8. Atualizar categoria (substitua o ID)
+PUT {{baseUrl}}/categories/COLOQUE-O-ID-AQUI
+Authorization: Bearer {{token}}
+Content-Type: {{contentType}}
+
+{
+  "budget": 20000,
+  "description": "Atualizado: Receitas de consultoria especializada"
+}
+
+### 9. Deletar categoria (substitua o ID)
+DELETE {{baseUrl}}/categories/COLOQUE-O-ID-AQUI
+Authorization: Bearer {{token}}
+
+### 10. Login como usuário pessoal
+POST {{baseUrl}}/auth/login
+Content-Type: {{contentType}}
+
+{
+  "email": "pessoal@email.com",
+  "password": "123456"
+}
+
+### Salve o novo token aqui:
+@tokenPessoal = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+
+### 11. Listar categorias do usuário pessoal
+GET {{baseUrl}}/categories
+Authorization: Bearer {{tokenPessoal}}
+
+### 12. Criar categoria pessoal
+POST {{baseUrl}}/categories
+Authorization: Bearer {{tokenPessoal}}
+Content-Type: {{contentType}}
+
+{
+  "name": "Academia",
+  "type": "expense",
+  "budget": 150,
+  "month": 1,
+  "is_punctual": false,
+  "description": "Mensalidade da academia",
+  "color": "#FF6B6B"
+}
